@@ -13,7 +13,6 @@ import log from './utils/log.js';
 
 (async () => {
 	try {
-		await init({ clear: true });
 		await cliInit();
 	} catch (error) {
 		console.error(chalk.red('Fatal error:', error.message));

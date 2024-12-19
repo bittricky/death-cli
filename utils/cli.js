@@ -112,7 +112,7 @@ async function handleInteractive() {
 }
 
 export async function init() {
-	if (cli.flags.interactive) {
+	if (!cli.flags.kill && cli.input.length === 0) {
 		await handleInteractive();
 	} else {
 		await handleNonInteractive(cli);
