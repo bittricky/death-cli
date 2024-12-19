@@ -2,20 +2,21 @@
 
 /**
  * death
- * Command line tool kill processes
+ * Command line tool to kill processes
  *
  * @author Mitul Patel <https://mitulpa.tel>
  */
 
-import cli from './utils/cli.js';
+import { init as cliInit } from './utils/cli.js';
 import init from './utils/init.js';
 import log from './utils/log.js';
 
-const { flags, input, showHelp } = cli;
-const { clear, debug } = flags;
-
 (async () => {
-	await init({ clear });
-	debug && log(flags);
-	input.includes(`help`) && showHelp(0);
+	try {
+		await init({ clear: true });
+		await cliInit();
+	} catch (error) {
+		console.error(chalk.red('Fatal error:', error.message));
+		process.exit(1);
+	}
 })();
