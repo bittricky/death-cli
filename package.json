@@ -1,7 +1,7 @@
 {
 	"name": "death",
 	"description": "Command line tool to kill processes",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"license": "MIT",
 	"type": "module",
 	"bin": {
