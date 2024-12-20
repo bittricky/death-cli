@@ -1,4 +1,4 @@
-# Death
+# Death CLI
 
 A command-line interface (CLI) tool for managing system processes. Death provides both an interactive mode and command-line options for listing and killing processes.
 
@@ -25,7 +25,7 @@ Please consult with a licensed medical professional or mental health provider fo
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/bittricky/death.git
+git clone https://github.com/bittricky/death-cli.git
 cd death
 ```
 
