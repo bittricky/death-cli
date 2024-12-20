@@ -1,16 +1,9 @@
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import meowHelp from 'cli-meow-help';
 import meow from 'meow';
 import { listProcesses, displayProcesses, killProcess } from './processes.js';
 
 const flags = {
-	clear: {
-		type: `boolean`,
-		default: true,
-		shortFlag: `c`,
-		desc: `Clear the console`
-	},
 	interactive: {
 		type: `boolean`,
 		default: false,
@@ -21,23 +14,44 @@ const flags = {
 		type: `string`,
 		shortFlag: `k`,
 		desc: `Kill a process by PID`
+	},
+	list: {
+		type: `boolean`,
+		shortFlag: `l`,
+		desc: `List all processes`
 	}
 };
 
-const helpText = meowHelp({
-	name: `death`,
-	flags,
-	commands: [
-		{
-			name: 'list',
-			desc: 'List all processes'
-		},
-		{
-			name: 'kill',
-			desc: 'Kill a process by PID'
-		}
-	]
-});
+const commands = {
+	list: {
+		desc: `List all running processes`
+	},
+	kill: {
+		desc: `Kill a process by PID`
+	}
+};
+
+const helpText = `
+	Usage
+	  $ death [options] [command]
+
+	Commands
+	  list          List all running processes
+	  kill <pid>    Kill a process by PID
+
+	Options
+	  -i, --interactive    Run in interactive mode
+	  -k, --kill <pid>    Kill a process by PID
+	  -l, --list          List all processes
+	  -h, --help         Show help text
+	  -v, --version      Show version
+
+	Examples
+	  $ death              # Run in interactive mode
+	  $ death list        # List all processes
+	  $ death -k 1234     # Kill process with PID 1234
+	  $ death -i          # Run in interactive mode
+`;
 
 const options = {
 	importMeta: import.meta,
@@ -54,6 +68,16 @@ async function handleNonInteractive(cli) {
 
 	if (cli.flags.kill) {
 		await killProcess(cli.flags.kill);
+		return;
+	}
+
+	if (cli.flags.list || cli.input[0] === 'list') {
+		displayProcesses(processes);
+		return;
+	}
+
+	if (cli.input.length > 0) {
+		console.log(cli.help);
 		return;
 	}
 
@@ -112,7 +136,7 @@ async function handleInteractive() {
 }
 
 export async function init() {
-	if (!cli.flags.kill && cli.input.length === 0) {
+	if (!cli.flags.kill && !cli.flags.list && cli.input.length === 0) {
 		await handleInteractive();
 	} else {
 		await handleNonInteractive(cli);
