@@ -7,22 +7,29 @@
 	"bin": {
 		"death": "index.js"
 	},
-	"author": {
-		"name": "Mitul Patel",
-		"email": "me@mitulpa.tel",
-		"url": "https://mitulpa.tel"
+	"engines": {
+		"node": ">=18"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bittricky/death"
 	},
 	"keywords": [
-		"death"
-	],
-	"files": [
-		"index.js",
-		"utils"
+		"cli",
+		"process",
+		"kill",
+		"task-manager",
+		"system",
+		"utility"
 	],
 	"scripts": {
 		"format": "prettier --write \"./**/*.{js,json}\"",
 		"dev": "node index.js",
-		"start": "node index.js"
+		"start": "node index.js",
+		"prepublishOnly": "npm run format",
+		"publish:patch": "npm version patch && npm publish",
+		"publish:minor": "npm version minor && npm publish",
+		"publish:major": "npm version major && npm publish"
 	},
 	"dependencies": {
 		"chalk": "^5.4.0",
@@ -38,5 +45,16 @@
 	},
 	"devDependencies": {
 		"prettier": "^3.4.2"
+	},
+	"files": [
+		"index.js",
+		"utils",
+		"README.md",
+		"LICENSE"
+	],
+	"author": {
+		"name": "Mitul Patel",
+		"email": "me@mitulpa.tel",
+		"url": "https://mitulpa.tel"
 	}
 }
